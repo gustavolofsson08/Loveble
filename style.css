@@ -8,7 +8,9 @@
   padding: 0;
 }
 
-/* FÄRGVARIABLER */
+/* =============================================
+   FÄRGVARIABLER & GRUNDINSTÄLLNINGAR
+   ============================================= */
 :root {
   --bg: #0f0d0b;
   --surface: #1a1714;
@@ -36,18 +38,17 @@ body {
 /* =============================================
    NAVIGATION
    ============================================= */
-
 nav {
   position: fixed;
-  top: 0;
-  left: 0;
+  top: 0; 
+  left: 0; 
   right: 0;
   z-index: 100;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 1.2rem 3rem;
-  background: rgba(15, 13, 11, 0.85);
+  background: rgba(15,13,11,0.85);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
 }
@@ -60,10 +61,10 @@ nav {
   letter-spacing: 0.02em;
 }
 
-.nav-links {
-  display: flex;
-  gap: 2rem;
-  list-style: none;
+.nav-links { 
+  display: flex; 
+  gap: 2rem; 
+  list-style: none; 
 }
 
 .nav-links a {
@@ -75,14 +76,13 @@ nav {
   transition: color 0.2s;
 }
 
-.nav-links a:hover {
-  color: var(--text);
+.nav-links a:hover { 
+  color: var(--text); 
 }
 
 /* =============================================
-   HERO
+   HERO-SEKTION
    ============================================= */
-
 .hero {
   min-height: 100vh;
   display: grid;
@@ -101,7 +101,7 @@ nav {
   right: -10%;
   width: 600px;
   height: 600px;
-  background: radial-gradient(circle, rgba(232, 97, 42, 0.15) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(232,97,42,0.15) 0%, transparent 70%);
   pointer-events: none;
 }
 
@@ -156,9 +156,9 @@ nav {
   transition: background 0.2s, transform 0.2s;
 }
 
-.hero-cta:hover {
-  background: #cf4f1e;
-  transform: translateY(-2px);
+.hero-cta:hover { 
+  background: #cf4f1e; 
+  transform: translateY(-2px); 
 }
 
 .hero-visual {
@@ -171,7 +171,7 @@ nav {
   display: block;
   border: 1px solid var(--border);
   background: var(--surface);
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 16/10;
   overflow: hidden;
 }
 
@@ -199,18 +199,17 @@ nav {
   color: var(--accent);
 }
 
-.hero-badge-label {
-  font-size: 0.75rem;
-  color: var(--muted);
-  letter-spacing: 0.04em;
+.hero-badge-label { 
+  font-size: 0.75rem; 
+  color: var(--muted); 
+  letter-spacing: 0.04em; 
 }
 
 /* =============================================
-   GENERELLA SEKTIONER
+   SEKTIONER: BASSTILAR
    ============================================= */
-
-section {
-  padding: 6rem 3rem;
+section { 
+  padding: 6rem 3rem; 
 }
 
 .section-label {
@@ -229,6 +228,7 @@ h2 {
   margin-bottom: 1.5rem;
 }
 
+/* DIVIDER */
 .divider {
   width: 3rem;
   height: 2px;
@@ -237,11 +237,10 @@ h2 {
 }
 
 /* =============================================
-   OM-SEKTION
+   OM VERKTYGET
    ============================================= */
-
-.about {
-  background: var(--surface);
+.about { 
+  background: var(--surface); 
 }
 
 .about-grid {
@@ -253,44 +252,16 @@ h2 {
   margin: 0 auto;
 }
 
-.about-text p {
-  color: var(--muted);
-  margin-bottom: 1rem;
-  font-size: 1rem;
+.about-text p { 
+  color: var(--muted); 
+  margin-bottom: 1rem; 
+  font-size: 1rem; 
 }
 
-.about-text p strong {
-  color: var(--text);
-  font-weight: 500;
+.about-text p strong { 
+  color: var(--text); 
+  font-weight: 500; 
 }
-
-.stat-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-  margin-top: 2rem;
-}
-
-.stat-box {
-  background: var(--surface2);
-  border: 1px solid var(--border);
-  padding: 1.2rem;
-  border-radius: 4px;
-}
-
-.stat-number {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: var(--accent);
-}
-
-.stat-desc {
-  font-size: 0.78rem;
-  color: var(--muted);
-}
-
-/* GRUNDARKORT */
 
 .founders-card {
   background: var(--surface2);
@@ -314,8 +285,8 @@ h2 {
   border-bottom: 1px solid var(--border);
 }
 
-.founder:last-child {
-  border-bottom: none;
+.founder:last-child { 
+  border-bottom: none; 
 }
 
 .founder-avatar {
@@ -333,32 +304,47 @@ h2 {
   flex-shrink: 0;
 }
 
-.founder-info {
-  font-size: 0.9rem;
+.founder-info { font-size: 0.9rem; }
+.founder-name { color: var(--text); font-weight: 500; }
+.founder-role { color: var(--muted); font-size: 0.8rem; }
+
+.stat-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 2rem;
 }
 
-.founder-name {
-  color: var(--text);
-  font-weight: 500;
+.stat-box {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  padding: 1.2rem;
+  border-radius: 4px;
 }
 
-.founder-role {
-  color: var(--muted);
-  font-size: 0.8rem;
+.stat-number {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.stat-desc { 
+  font-size: 0.78rem; 
+  color: var(--muted); 
 }
 
 /* =============================================
    HUR DET FUNGERAR
    ============================================= */
-
-.how {
-  max-width: 1100px;
-  margin: 0 auto;
+.how { 
+  max-width: 1100px; 
+  margin: 0 auto; 
 }
 
-.how-header {
-  text-align: center;
-  margin-bottom: 4rem;
+.how-header { 
+  text-align: center; 
+  margin-bottom: 4rem; 
 }
 
 .steps {
@@ -377,8 +363,8 @@ h2 {
   transition: border-color 0.3s;
 }
 
-.step:hover {
-  border-color: var(--accent);
+.step:hover { 
+  border-color: var(--accent); 
 }
 
 .step-num {
@@ -397,26 +383,25 @@ h2 {
   color: var(--text);
 }
 
-.step p {
-  font-size: 0.9rem;
-  color: var(--muted);
+.step p { 
+  font-size: 0.9rem; 
+  color: var(--muted); 
 }
 
 /* =============================================
-   SKÄRMDUMPAR / GRÄNSSNITT
+   SCREENSHOTS / GRÄNSSNITT
    ============================================= */
-
-.screenshots {
-  background: var(--surface);
+.screenshots { 
+  background: var(--surface); 
 }
 
-.screenshots-inner {
-  max-width: 1100px;
-  margin: 0 auto;
+.screenshots-inner { 
+  max-width: 1100px; 
+  margin: 0 auto; 
 }
 
-.screenshots-header {
-  margin-bottom: 3rem;
+.screenshots-header { 
+  margin-bottom: 3rem; 
 }
 
 .screenshot-grid {
@@ -442,11 +427,10 @@ h2 {
 }
 
 .dot {
-  width: 10px;
+  width: 10px; 
   height: 10px;
   border-radius: 50%;
 }
-
 .dot-r { background: #e8612a; }
 .dot-y { background: #d4aa5e; }
 .dot-g { background: #5e9e6e; }
@@ -476,8 +460,8 @@ h2 {
 }
 
 .frame-result {
-  background: rgba(232, 97, 42, 0.08);
-  border: 1px solid rgba(232, 97, 42, 0.25);
+  background: rgba(232,97,42,0.08);
+  border: 1px solid rgba(232,97,42,0.25);
   border-radius: 3px;
   padding: 0.8rem 1rem;
   font-size: 0.82rem;
@@ -494,24 +478,23 @@ h2 {
   flex: 1;
 }
 
-.side-frames {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+.side-frames { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 1.5rem; 
 }
 
 /* =============================================
    PRISER
    ============================================= */
-
-.pricing-inner {
-  max-width: 1100px;
-  margin: 0 auto;
+.pricing-inner { 
+  max-width: 1100px; 
+  margin: 0 auto; 
 }
 
-.pricing-header {
-  text-align: center;
-  margin-bottom: 3rem;
+.pricing-header { 
+  text-align: center; 
+  margin-bottom: 3rem; 
 }
 
 .pricing-grid {
@@ -549,8 +532,8 @@ h2 {
   border-radius: 20px;
 }
 
-.plan:hover {
-  border-color: var(--accent2);
+.plan:hover { 
+  border-color: var(--accent2); 
 }
 
 .plan-name {
@@ -569,10 +552,10 @@ h2 {
   margin-bottom: 0.3rem;
 }
 
-.plan-price span {
-  font-size: 1rem;
-  font-weight: 400;
-  color: var(--muted);
+.plan-price span { 
+  font-size: 1rem; 
+  font-weight: 400; 
+  color: var(--muted); 
 }
 
 .plan-credits {
@@ -583,11 +566,11 @@ h2 {
   border-bottom: 1px solid var(--border);
 }
 
-.plan-features {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
+.plan-features { 
+  list-style: none; 
+  display: flex; 
+  flex-direction: column; 
+  gap: 0.6rem; 
 }
 
 .plan-features li {
@@ -605,16 +588,15 @@ h2 {
 }
 
 /* =============================================
-   MÅLGRUPP
+   MÅLGRUPP (AUDIENCE)
    ============================================= */
-
-.audience {
-  background: var(--surface);
+.audience { 
+  background: var(--surface); 
 }
 
-.audience-inner {
-  max-width: 1100px;
-  margin: 0 auto;
+.audience-inner { 
+  max-width: 1100px; 
+  margin: 0 auto; 
 }
 
 .audience-grid {
@@ -631,8 +613,8 @@ h2 {
   transition: border-color 0.3s;
 }
 
-.audience-card:hover {
-  border-color: var(--accent2);
+.audience-card:hover { 
+  border-color: var(--accent2); 
 }
 
 .audience-icon {
@@ -647,18 +629,17 @@ h2 {
   color: var(--text);
 }
 
-.audience-card p {
-  font-size: 0.88rem;
-  color: var(--muted);
+.audience-card p { 
+  font-size: 0.88rem; 
+  color: var(--muted); 
 }
 
 /* =============================================
-   BEGRÄNSNINGAR
+   BEGRÄNSNINGAR (LIMITATIONS)
    ============================================= */
-
-.limitations-inner {
-  max-width: 1100px;
-  margin: 0 auto;
+.limitations-inner { 
+  max-width: 1100px; 
+  margin: 0 auto; 
 }
 
 .limit-grid {
@@ -684,30 +665,29 @@ h2 {
   margin-top: 0.15rem;
 }
 
-.limit-card h3 {
-  font-size: 0.95rem;
-  font-weight: 500;
-  margin-bottom: 0.3rem;
-  color: var(--accent2);
+.limit-card h3 { 
+  font-size: 0.95rem; 
+  font-weight: 500; 
+  margin-bottom: 0.3rem; 
+  color: var(--accent2); 
 }
 
-.limit-card p {
-  font-size: 0.85rem;
-  color: var(--muted);
+.limit-card p { 
+  font-size: 0.85rem; 
+  color: var(--muted); 
 }
 
 /* =============================================
-   LÄNKAR
+   LÄNKAR (LINKS)
    ============================================= */
-
-.links-section {
-  background: var(--surface);
-  text-align: center;
+.links-section { 
+  background: var(--surface); 
+  text-align: center; 
 }
 
-.links-inner {
-  max-width: 700px;
-  margin: 0 auto;
+.links-inner { 
+  max-width: 700px; 
+  margin: 0 auto; 
 }
 
 .link-cards {
@@ -730,32 +710,31 @@ h2 {
   transition: border-color 0.2s, background 0.2s;
 }
 
-.link-card:hover {
-  border-color: var(--accent);
-  background: var(--bg);
+.link-card:hover { 
+  border-color: var(--accent); 
+  background: var(--bg); 
 }
 
-.link-card-label {
-  font-size: 0.75rem;
-  color: var(--muted);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+.link-card-label { 
+  font-size: 0.75rem; 
+  color: var(--muted); 
+  letter-spacing: 0.08em; 
+  text-transform: uppercase; 
 }
 
-.link-card-title {
-  font-size: 0.95rem;
-  font-weight: 500;
+.link-card-title { 
+  font-size: 0.95rem; 
+  font-weight: 500; 
 }
 
-.link-arrow {
-  color: var(--accent);
-  font-size: 1.1rem;
+.link-arrow { 
+  color: var(--accent); 
+  font-size: 1.1rem; 
 }
 
 /* =============================================
    FOOTER
    ============================================= */
-
 footer {
   border-top: 1px solid var(--border);
   padding: 2rem 3rem;
@@ -766,73 +745,60 @@ footer {
   color: var(--muted);
 }
 
-footer a {
-  color: var(--muted);
-  text-decoration: none;
+footer a { 
+  color: var(--muted); 
+  text-decoration: none; 
 }
 
-footer a:hover {
-  color: var(--accent);
+footer a:hover { 
+  color: var(--accent); 
 }
 
 /* =============================================
-   RESPONSIV DESIGN (mobil)
+   RESPONSIV DESIGN (MEDIA QUERIES)
    ============================================= */
-
 @media (max-width: 900px) {
-  nav {
-    padding: 1rem 1.5rem;
+  nav { 
+    padding: 1rem 1.5rem; 
   }
-
-  .nav-links {
-    display: none;
+  .nav-links { 
+    display: none; 
   }
-
-  .hero {
-    grid-template-columns: 1fr;
-    padding: 6rem 1.5rem 3rem;
+  .hero { 
+    grid-template-columns: 1fr; 
+    padding: 6rem 1.5rem 3rem; 
   }
-
-  .hero-visual {
-    display: none;
+  .hero-visual { 
+    display: none; 
   }
-
-  .about-grid {
-    grid-template-columns: 1fr;
-    gap: 3rem;
+  .about-grid { 
+    grid-template-columns: 1fr; 
+    gap: 3rem; 
   }
-
-  section {
-    padding: 4rem 1.5rem;
+  section { 
+    padding: 4rem 1.5rem; 
   }
-
-  .steps {
-    grid-template-columns: 1fr;
+  .steps { 
+    grid-template-columns: 1fr; 
   }
-
-  .screenshot-grid {
-    grid-template-columns: 1fr;
+  .screenshot-grid { 
+    grid-template-columns: 1fr; 
   }
-
-  .pricing-grid {
-    grid-template-columns: 1fr 1fr;
+  .pricing-grid { 
+    grid-template-columns: 1fr 1fr; 
   }
-
-  .audience-grid {
-    grid-template-columns: 1fr;
+  .audience-grid { 
+    grid-template-columns: 1fr; 
   }
-
-  .limit-grid {
-    grid-template-columns: 1fr;
+  .limit-grid { 
+    grid-template-columns: 1fr; 
   }
-
-  .stat-row {
-    grid-template-columns: 1fr 1fr;
+  footer { 
+    flex-direction: column; 
+    gap: 0.5rem; 
+    text-align: center; 
   }
-
-  footer {
-    flex-direction: column;
-    gap: 0.5rem;
-    text-align: center;
+  .stat-row { 
+    grid-template-columns: 1fr 1fr; 
   }
 }
