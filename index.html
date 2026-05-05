@@ -1,1 +1,913 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lovable – AI-verktyget som bygger appar åt dig</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    :root {
+      --bg: #0f0d0b;
+      --surface: #1a1714;
+      --surface2: #242018;
+      --accent: #e8612a;
+      --accent2: #f0a272;
+      --text: #f0ebe4;
+      --muted: #9a9080;
+      --border: #2e2a24;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 3rem;
+      background: rgba(15,13,11,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 0.02em;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 8rem 3rem 4rem;
+      gap: 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -20%;
+      right: -10%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(232,97,42,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .hero-label::before {
+      content: '';
+      display: block;
+      width: 2rem;
+      height: 1px;
+      background: var(--accent);
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 5vw, 4.5rem);
+      line-height: 1.1;
+      font-weight: 900;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+    .hero-sub {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 480px;
+      margin-bottom: 2.5rem;
+    }
+    .hero-cta {
+      display: inline-block;
+      padding: 0.9rem 2rem;
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .hero-cta:hover { background: #cf4f1e; transform: translateY(-2px); }
+
+    .hero-visual {
+      position: relative;
+    }
+    .hero-img {
+      width: 100%;
+      border-radius: 4px;
+      display: block;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      aspect-ratio: 16/10;
+      overflow: hidden;
+    }
+    .hero-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .hero-badge {
+      position: absolute;
+      bottom: -1.5rem;
+      left: -1.5rem;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 1rem 1.4rem;
+      border-radius: 4px;
+    }
+    .hero-badge-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .hero-badge-label { font-size: 0.75rem; color: var(--muted); letter-spacing: 0.04em; }
+
+    /* SECTION BASE */
+    section { padding: 6rem 3rem; }
+    .section-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+    }
+
+    /* ABOUT */
+    .about { background: var(--surface); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .about-text p { color: var(--muted); margin-bottom: 1rem; font-size: 1rem; }
+    .about-text p strong { color: var(--text); font-weight: 500; }
+    .founders-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 2rem;
+      border-radius: 4px;
+    }
+    .founders-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      margin-bottom: 1.2rem;
+      color: var(--accent2);
+    }
+    .founder {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.8rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .founder:last-child { border-bottom: none; }
+    .founder-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .founder-info { font-size: 0.9rem; }
+    .founder-name { color: var(--text); font-weight: 500; }
+    .founder-role { color: var(--muted); font-size: 0.8rem; }
+
+    .stat-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .stat-box {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 1.2rem;
+      border-radius: 4px;
+    }
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .stat-desc { font-size: 0.78rem; color: var(--muted); }
+
+    /* HOW IT WORKS */
+    .how { max-width: 1100px; margin: 0 auto; }
+    .how-header { text-align: center; margin-bottom: 4rem; }
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+    .step {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 2rem;
+      border-radius: 4px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s;
+    }
+    .step:hover { border-color: var(--accent); }
+    .step-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 4rem;
+      font-weight: 900;
+      color: var(--border);
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+    .step h3 {
+      font-size: 1.05rem;
+      font-weight: 500;
+      margin-bottom: 0.6rem;
+      color: var(--text);
+    }
+    .step p { font-size: 0.9rem; color: var(--muted); }
+
+    /* SCREENSHOT SECTION */
+    .screenshots { background: var(--surface); }
+    .screenshots-inner { max-width: 1100px; margin: 0 auto; }
+    .screenshots-header { margin-bottom: 3rem; }
+    .screenshot-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 1.5rem;
+    }
+    .screenshot-frame {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .frame-bar {
+      background: var(--bg);
+      padding: 0.6rem 1rem;
+      display: flex;
+      gap: 0.4rem;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+    }
+    .dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+    }
+    .dot-r { background: #e8612a; }
+    .dot-y { background: #d4aa5e; }
+    .dot-g { background: #5e9e6e; }
+    .frame-url {
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-left: 0.5rem;
+      letter-spacing: 0.04em;
+    }
+    .frame-body {
+      padding: 1.5rem;
+      min-height: 220px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+    .frame-prompt {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 0.8rem 1rem;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+    .frame-result {
+      background: rgba(232,97,42,0.08);
+      border: 1px solid rgba(232,97,42,0.25);
+      border-radius: 3px;
+      padding: 0.8rem 1rem;
+      font-size: 0.82rem;
+      color: var(--accent2);
+    }
+    .frame-code {
+      background: var(--bg);
+      border-radius: 3px;
+      padding: 0.8rem 1rem;
+      font-size: 0.75rem;
+      color: #6e8f6e;
+      font-family: monospace;
+      flex: 1;
+    }
+    .side-frames { display: flex; flex-direction: column; gap: 1.5rem; }
+
+    /* PRICING */
+    .pricing-inner { max-width: 1100px; margin: 0 auto; }
+    .pricing-header { text-align: center; margin-bottom: 3rem; }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+    .plan {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 2rem 1.5rem;
+      transition: border-color 0.3s;
+    }
+    .plan.featured {
+      border-color: var(--accent);
+      background: var(--surface2);
+      position: relative;
+    }
+    .plan.featured::before {
+      content: 'Populär';
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.8rem;
+      border-radius: 20px;
+    }
+    .plan:hover { border-color: var(--accent2); }
+    .plan-name {
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+    .plan-price {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.3rem;
+    }
+    .plan-price span { font-size: 1rem; font-weight: 400; color: var(--muted); }
+    .plan-credits {
+      font-size: 0.8rem;
+      color: var(--accent2);
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .plan-features { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .plan-features li {
+      font-size: 0.82rem;
+      color: var(--muted);
+      padding-left: 1.2rem;
+      position: relative;
+    }
+    .plan-features li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+    }
+
+    /* AUDIENCE */
+    .audience { background: var(--surface); }
+    .audience-inner { max-width: 1100px; margin: 0 auto; }
+    .audience-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    .audience-card {
+      border: 1px solid var(--border);
+      padding: 2rem;
+      border-radius: 4px;
+      transition: border-color 0.3s;
+    }
+    .audience-card:hover { border-color: var(--accent2); }
+    .audience-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    .audience-card h3 {
+      font-size: 1rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+    .audience-card p { font-size: 0.88rem; color: var(--muted); }
+
+    /* LIMITATIONS */
+    .limitations-inner { max-width: 1100px; margin: 0 auto; }
+    .limit-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+    .limit-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.5rem;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+    .limit-icon {
+      font-size: 1.4rem;
+      flex-shrink: 0;
+      margin-top: 0.15rem;
+    }
+    .limit-card h3 { font-size: 0.95rem; font-weight: 500; margin-bottom: 0.3rem; color: var(--accent2); }
+    .limit-card p { font-size: 0.85rem; color: var(--muted); }
+
+    /* LINKS */
+    .links-section { background: var(--surface); text-align: center; }
+    .links-inner { max-width: 700px; margin: 0 auto; }
+    .link-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 2.5rem;
+    }
+    .link-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      padding: 1.2rem 1.8rem;
+      border-radius: 4px;
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .link-card:hover { border-color: var(--accent); background: var(--bg); }
+    .link-card-label { font-size: 0.75rem; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
+    .link-card-title { font-size: 0.95rem; font-weight: 500; }
+    .link-arrow { color: var(--accent); font-size: 1.1rem; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover { color: var(--accent); }
+
+    /* DIVIDER */
+    .divider {
+      width: 3rem;
+      height: 2px;
+      background: var(--accent);
+      margin: 1.5rem 0;
+    }
+
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; padding: 6rem 1.5rem 3rem; }
+      .hero-visual { display: none; }
+      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+      section { padding: 4rem 1.5rem; }
+      .steps { grid-template-columns: 1fr; }
+      .screenshot-grid { grid-template-columns: 1fr; }
+      .pricing-grid { grid-template-columns: 1fr 1fr; }
+      .audience-grid { grid-template-columns: 1fr; }
+      .limit-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+      .stat-row { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">Lovable</div>
+    <ul class="nav-links">
+      <li><a href="#om">Om verktyget</a></li>
+      <li><a href="#hur">Hur det fungerar</a></li>
+      <li><a href="#priser">Priser</a></li>
+      <li><a href="#malgrupp">Målgrupp</a></li>
+      <li><a href="#begransningar">Begränsningar</a></li>
+      <li><a href="#lankar">Länkar</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-text">
+      <div class="hero-label">AI-verktyg</div>
+      <h1>Bygg appar med <em>text</em>, inte kod.</h1>
+      <p class="hero-sub">Lovable är ett AI-drivet verktyg som omvandlar dina textbeskrivningar till fungerande webbappar. Ingen kodning krävs.</p>
+      <a class="hero-cta" href="https://lovable.dev" target="_blank" rel="noopener">Besök Lovable.dev</a>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-img">
+        <img
+          src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80"
+          alt="Lovable gränssnitt – AI app builder"
+          loading="lazy"
+        />
+      </div>
+      <div class="hero-badge">
+        <div class="hero-badge-num">$400M</div>
+        <div class="hero-badge-label">ARR februari 2026</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="om">
+    <div class="about-grid">
+      <div class="about-text">
+        <div class="section-label">Om verktyget</div>
+        <h2>Vad är Lovable?</h2>
+        <div class="divider"></div>
+        <p>Lovable är en <strong>AI-driven app-byggare</strong> som låter vem som helst skapa fullständiga webbapplikationer genom att skriva på vanlig svenska eller engelska. Du beskriver vad du vill bygga, och AI:n genererar koden åt dig.</p>
+        <p>Verktyget bygger på reaktiv teknik och producerar <strong>React-baserade appar</strong> med inbyggt stöd för Supabase som databas och GitHub för versionshantering. Appen deployas direkt i molnet.</p>
+        <p>Lovable startades 2023 av <strong>Anton Osika</strong> och <strong>Fabian Hedin</strong> under namnet GPT Engineer, som öppen källkod på GitHub. Det samlade 50 000 stjärnor på rekordtid. I november 2024 lanserades Lovable som ett grafiskt verktyg.</p>
+        <div class="stat-row">
+          <div class="stat-box">
+            <div class="stat-number">$1,8B</div>
+            <div class="stat-desc">Värdering (juli 2025)</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number">20x</div>
+            <div class="stat-desc">Snabbare än handkodning</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number">50k+</div>
+            <div class="stat-desc">GitHub-stjärnor på GPT Engineer</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number">2023</div>
+            <div class="stat-desc">Grundades av Osika och Hedin</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="founders-card">
+          <h3>Grundare</h3>
+          <div class="founder">
+            <div class="founder-avatar">A</div>
+            <div class="founder-info">
+              <div class="founder-name">Anton Osika</div>
+              <div class="founder-role">CEO och medgrundare</div>
+            </div>
+          </div>
+          <div class="founder">
+            <div class="founder-avatar">F</div>
+            <div class="founder-info">
+              <div class="founder-name">Fabian Hedin</div>
+              <div class="founder-role">CTO och medgrundare</div>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:1.5rem;">
+          <img
+            src="https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=600&q=80"
+            alt="AI kod-generering"
+            style="width:100%;border-radius:4px;border:1px solid var(--border);display:block;"
+            loading="lazy"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="hur">
+    <div class="how">
+      <div class="how-header">
+        <div class="section-label">Hur det fungerar</div>
+        <h2>Tre steg från idé till app</h2>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">01</div>
+          <h3>Beskriv din idé</h3>
+          <p>Skriv vad du vill bygga på vanlig text. Exempelvis: "Bygg en att-göra-lista med inloggning och mörkt läge." Ju tydligare du skriver, desto bättre resultat.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <h3>AI genererar koden</h3>
+          <p>Lovable skapar en fungerande React-app direkt. Du ser resultatet i realtid i förhandsgranskningsfönstret bredvid chatten.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <h3>Iterera och publicera</h3>
+          <p>Skriv in ändringar i chatten. Finjustera design, lägg till funktioner, eller koppla in en databas. Publicera med ett klick på Lovables domän eller din egen.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCREENSHOT MOCKUPS -->
+  <section class="screenshots" id="granssnitt">
+    <div class="screenshots-inner">
+      <div class="screenshots-header">
+        <div class="section-label">Gränssnittet</div>
+        <h2>Så ser det ut i praktiken</h2>
+      </div>
+      <div class="screenshot-grid">
+        <div class="screenshot-frame">
+          <div class="frame-bar">
+            <span class="dot dot-r"></span>
+            <span class="dot dot-y"></span>
+            <span class="dot dot-g"></span>
+            <span class="frame-url">lovable.dev/projects/my-app</span>
+          </div>
+          <div class="frame-body">
+            <div class="frame-prompt">Du: "Skapa en enkel faktura-app med kundnamn, produktrader och totalsumma."</div>
+            <div class="frame-result">Lovable: Genererar React-komponenter, sätter upp Supabase-tabell, skapar PDF-export...</div>
+            <div class="frame-code">
+              const Invoice = () => {<br>
+              &nbsp;&nbsp;const [items, setItems] = useState([]);<br>
+              &nbsp;&nbsp;const total = items.reduce(...);<br>
+              &nbsp;&nbsp;return &lt;div className="invoice"&gt;...
+            </div>
+          </div>
+        </div>
+        <div class="side-frames">
+          <div class="screenshot-frame">
+            <div class="frame-bar">
+              <span class="dot dot-r"></span>
+              <span class="dot dot-y"></span>
+              <span class="dot dot-g"></span>
+            </div>
+            <div class="frame-body" style="min-height:120px;">
+              <img
+                src="https://images.unsplash.com/photo-1593720213428-28a5b9e94613?w=400&q=80"
+                alt="App interface i Lovable"
+                style="width:100%;border-radius:3px;object-fit:cover;height:140px;"
+                loading="lazy"
+              />
+            </div>
+          </div>
+          <div class="screenshot-frame">
+            <div class="frame-bar">
+              <span class="dot dot-r"></span>
+              <span class="dot dot-y"></span>
+              <span class="dot dot-g"></span>
+            </div>
+            <div class="frame-body" style="min-height:120px;">
+              <img
+                src="https://images.unsplash.com/photo-1555066931-4365d14431b9?w=400&q=80"
+                alt="Kodeditor i verktyget"
+                style="width:100%;border-radius:3px;object-fit:cover;height:140px;"
+                loading="lazy"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="priser">
+    <div class="pricing-inner">
+      <div class="pricing-header">
+        <div class="section-label">Priser</div>
+        <h2>Välj rätt plan för dina behov</h2>
+        <p style="color:var(--muted);font-size:0.9rem;margin-top:0.5rem;">Lovable använder ett kreditbaserat system. Varje AI-interaktion kostar krediter beroende på komplexitet.</p>
+      </div>
+      <div class="pricing-grid">
+        <div class="plan">
+          <div class="plan-name">Gratis</div>
+          <div class="plan-price">$0 <span>/ mån</span></div>
+          <div class="plan-credits">5 krediter per dag / 30 per månad</div>
+          <ul class="plan-features">
+            <li>Publika projekt</li>
+            <li>GitHub-synkronisering</li>
+            <li>Publicering med ett klick</li>
+            <li>Bra för testning</li>
+          </ul>
+        </div>
+        <div class="plan featured">
+          <div class="plan-name">Pro</div>
+          <div class="plan-price">$21 <span>/ mån</span></div>
+          <div class="plan-credits">100–10 000 krediter per månad</div>
+          <ul class="plan-features">
+            <li>Privata projekt</li>
+            <li>Anpassad domän</li>
+            <li>Kodredigerare (Dev Mode)</li>
+            <li>Ta bort Lovable-logga</li>
+            <li>Krediter rullar över</li>
+          </ul>
+        </div>
+        <div class="plan">
+          <div class="plan-name">Business</div>
+          <div class="plan-price">$42 <span>/ mån</span></div>
+          <div class="plan-credits">Samma krediter som Pro, plus säkerhet</div>
+          <ul class="plan-features">
+            <li>SSO-autentisering</li>
+            <li>Opt-out från AI-träning</li>
+            <li>Teamsamarbete</li>
+            <li>Avancerade säkerhetsfunktioner</li>
+          </ul>
+        </div>
+        <div class="plan">
+          <div class="plan-name">Enterprise</div>
+          <div class="plan-price" style="font-size:1.4rem;">Anpassat</div>
+          <div class="plan-credits">Skräddarsydda krediter och funktioner</div>
+          <ul class="plan-features">
+            <li>Dedikerad support</li>
+            <li>Gruppbaserad åtkomstkontroll</li>
+            <li>Anpassade integrationer</li>
+            <li>SLA-avtal</li>
+          </ul>
+        </div>
+      </div>
+      <p style="text-align:center;font-size:0.78rem;color:var(--muted);margin-top:1.5rem;">Studenter får 50% rabatt på Pro. Priser anges vid årsbetalning. Backend-tjänster (Lovable Cloud) faktureras separat.</p>
+    </div>
+  </section>
+
+  <!-- AUDIENCE -->
+  <section class="audience" id="malgrupp">
+    <div class="audience-inner">
+      <div class="section-label">Målgrupp</div>
+      <h2>Vem är Lovable till för?</h2>
+      <div class="audience-grid">
+        <div class="audience-card">
+          <div class="audience-icon">🚀</div>
+          <h3>Entrepreneurs och startups</h3>
+          <p>Bygg en MVP på dagar istället för månader. Testa idéer snabbt utan att anställa ett dev-team. Lovable rekommenderas starkt för att validera produktidéer.</p>
+        </div>
+        <div class="audience-card">
+          <div class="audience-icon">👩‍💻</div>
+          <h3>Utvecklare och tech-team</h3>
+          <p>Generera projektstruktur, frontend-UI och integrationer snabbt. Exportera till GitHub och ta över koden när projektet skalas upp.</p>
+        </div>
+        <div class="audience-card">
+          <div class="audience-icon">🏢</div>
+          <h3>Icke-tekniska användare</h3>
+          <p>Skapa interna verktyg, prototyper och enkla webbappar utan att skriva en enda rad kod. Fungerar bäst med tydliga, detaljerade textbeskrivningar.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIMITATIONS -->
+  <section id="begransningar">
+    <div class="limitations-inner">
+      <div class="section-label">Begränsningar</div>
+      <h2>Det du behöver känna till</h2>
+      <div class="limit-grid">
+        <div class="limit-card">
+          <div class="limit-icon">⚡</div>
+          <div>
+            <h3>Kreditgräns på gratisplanen</h3>
+            <p>Gratisplanen ger bara 5 krediter per dag. Du tar slut på 30 månadskrediter på sex dagar om du använder alla dagligen. Bra för testning, inte för seriösa projekt.</p>
+          </div>
+        </div>
+        <div class="limit-card">
+          <div class="limit-icon">💰</div>
+          <div>
+            <h3>Dubbel fakturering</h3>
+            <p>Prenumerationen täcker inte backend-tjänster. Lovable Cloud faktureras separat, vilket gör det svårt att förutsäga den totala månadskostnaden.</p>
+          </div>
+        </div>
+        <div class="limit-card">
+          <div class="limit-icon">🔒</div>
+          <div>
+            <h3>Säkerhetsrisker</h3>
+            <p>En sårbarhet kallad "VibeScamming" rapporterades i april 2025. Hantera inte känslig data i Lovable-appar utan att undersöka aktuella säkerhetsåtgärder.</p>
+          </div>
+        </div>
+        <div class="limit-card">
+          <div class="limit-icon">🔄</div>
+          <div>
+            <h3>Vaga prompts kostar mer</h3>
+            <p>Otydliga instruktioner leder till fler korrigeringsrundor, vilket förbrukar krediter snabbt. Planera din apparkitektur i förväg för att spara krediter.</p>
+          </div>
+        </div>
+        <div class="limit-card">
+          <div class="limit-icon">🛠️</div>
+          <div>
+            <h3>Kodfelsökning utanför plattformen</h3>
+            <p>AI-genererad kod introducerar ibland subtila buggar. Komplex felsökning kräver GitHub-åtkomst och teknisk kunskap utanför Lovables gränssnitt.</p>
+          </div>
+        </div>
+        <div class="limit-card">
+          <div class="limit-icon">📱</div>
+          <div>
+            <h3>Begränsad visuell redigering</h3>
+            <p>Lovable fokuserar på textbaserad interaktion. Drag-and-drop-redigering finns men är begränsad jämfört med verktyg som Webflow eller Framer.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LINKS -->
+  <section class="links-section" id="lankar">
+    <div class="links-inner">
+      <div class="section-label">Resurser</div>
+      <h2>Utforska Lovable vidare</h2>
+      <div class="link-cards">
+        <a href="https://lovable.dev" target="_blank" rel="noopener" class="link-card">
+          <div>
+            <div class="link-card-label">Officiell webbplats</div>
+            <div class="link-card-title">lovable.dev, Kom igång med att bygga din app</div>
+          </div>
+          <span class="link-arrow">→</span>
+        </a>
+        <a href="https://lovable.dev/pricing" target="_blank" rel="noopener" class="link-card">
+          <div>
+            <div class="link-card-label">Prissättning</div>
+            <div class="link-card-title">lovable.dev/pricing, Jämför alla planer och krediter</div>
+          </div>
+          <span class="link-arrow">→</span>
+        </a>
+        <a href="https://lovable.dev/students" target="_blank" rel="noopener" class="link-card">
+          <div>
+            <div class="link-card-label">Studentrabatt</div>
+            <div class="link-card-title">lovable.dev/students, 50% rabatt med studentbevis</div>
+          </div>
+          <span class="link-arrow">→</span>
+        </a>
+        <a href="https://github.com/AntonOsika/gpt-engineer" target="_blank" rel="noopener" class="link-card">
+          <div>
+            <div class="link-card-label">Öppen källkod</div>
+            <div class="link-card-title">GitHub: GPT Engineer, Lovables ursprungsprojekt med 50k+ stjärnor</div>
+          </div>
+          <span class="link-arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div>Presentation om Lovable, ett AI-verktyg för att bygga webbappar. Skapad för skoluppgift 2025.</div>
+    <div><a href="https://lovable.dev" target="_blank" rel="noopener">lovable.dev</a></div>
+  </footer>
+
+</body>
+</html>
