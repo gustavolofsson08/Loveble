@@ -12,14 +12,17 @@
    FÄRGVARIABLER & GRUNDINSTÄLLNINGAR
    ============================================= */
 :root {
-  --bg: #0f0d0b;
-  --surface: #1a1714;
-  --surface2: #242018;
-  --accent: #e8612a;
-  --accent2: #f0a272;
-  --text: #f0ebe4;
-  --muted: #9a9080;
-  --border: #2e2a24;
+ --bg:       #050d1a;
+  --surface:  #0b1629;
+  --surface2: #112039;
+  --surface3: #172b4d;
+  --accent:   #2dd4bf;
+  --accent2:  #67e8f9;
+  --accent3:  #a5f3fc;
+  --text:     #eef6ff;
+  --muted:    #7da8cc;
+  --border:   #1c3454;
+  --card-bg:  rgba(17, 32, 57, 0.7);
 }
 
 html {
